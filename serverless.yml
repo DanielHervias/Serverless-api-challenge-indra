@@ -1,0 +1,53 @@
+service: serverless-api-challenge
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:us-east-1:358212737854:table/Planets
+
+functions:
+  saveOnaPlanet:
+    handler: src/handler/planetas.save_planet
+    events:
+      - httpApi:
+          path: /save-planet
+          method: post
+  getPlanetByIdFromDB:
+    handler: src/handler/planetas.get_planet_by_id_from_db
+    events:
+      - httpApi:
+          path: /get-planet/{id}
+          method: get
+  getPlanetByIdFromSwapi:
+    handler: src/handler/planetas.get_planet_by_id_from_swapi
+    events:
+      - httpApi:
+          path: /get-planet-swapi/{id}
+          method: get
+  getAllPlanetFromDB:
+    handler: src/handler/planetas.get_all_planets_from_db
+    events:
+      - httpApi:
+          path: /get-planets
+          method: get
+
+resources:
+  Resources:
+    Planets:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Planets
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
