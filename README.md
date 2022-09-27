@@ -33,3 +33,7 @@ Este endpoint le permite a usted hacer un fetch de un elemento de la colección 
 ### Endpoint 4: https://1had2quone.execute-api.us-east-1.amazonaws.com/get-planets
 
 Este endpoint le permite a usted hacer un fetch de todos elementos de la colección de planetas que posee nuestra Dynamo DB.
+
+### Deployment
+
+Para subir nuevos cambios utilizar el comando: sls deploy --verbose 
